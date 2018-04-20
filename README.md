@@ -22,7 +22,8 @@ This Application compares youtubers based on different metrics such as subscribe
 		-Populates database for use by main.py
 
 ## Running the Program 
-To Run this program you will need to **install**:
+To Run this program you will need to **install**
+
 	-Dash from Plotly
 	-OAuth
 	-Beautiful Soup
@@ -30,6 +31,7 @@ To Run this program you will need to **install**:
 	-Plotly
 
 You will also need to **import**:
+
 	-sqlite3
 	-requests
 	-time
@@ -45,6 +47,7 @@ There are 2 types of Graphs: Bar and Box. They each have there own subset of dat
 Below are the subsets of data and below each option is how to call it.  
 
 **Bar Graph**:
+
 	-Total Subs
 		-bar TotalSubs
 	-Total Views in the last 30 Days
@@ -55,6 +58,7 @@ Below are the subsets of data and below each option is how to call it.
 		-bar TotalViews
 
 **Box Plot**:
+
 	-Twitter Senitment Analysis
 		-box Twitter
 	-Comment Sentiment Analysis 
