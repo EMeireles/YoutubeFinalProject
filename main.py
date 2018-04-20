@@ -248,6 +248,9 @@ def sort(logic):
                 ])
             return app_box.layout
 
+    else:
+        return False
+
 app_bar = dash.Dash()
 app_box = dash.Dash()
 
@@ -262,12 +265,18 @@ if __name__ == '__main__':
         logic=ipt.split()
         if logic[0]=='bar':
             lay=sort(logic)
-            app_bar.run_server()
-            ipt=input('Please enter a command or type "help" for more information: ')
+            if lay==False:
+                ipt=input('Sorry,Command Not recognized, Please try agian:')
+            else:
+                app_bar.run_server()
+                ipt=input('Please enter a command or type "help" for more information: ')
         elif logic[0]=='box':
             lay=sort(logic)
-            app_box.run_server()
-            ipt=input('Please enter a command or type "help" for more information: ')
+            if lay==False:
+                ipt=input('Sorry,Command Not recognized, Please try agian:')
+            else:
+                app_box.run_server()
+                ipt=input('Please enter a command or type "help" for more information: ')
         elif logic[0] == 'help':
             print(help_text)
             ipt=input('Please enter a command or type "help" for more information: ')

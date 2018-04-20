@@ -1,0 +1,24 @@
+Directions:
+
+There are 2 types of Graphs: Bar and Box. They each have there own subset of data
+
+Below are the subsets of data and below each option is how to call it.  
+
+Bar Graph:
+	-Total Subs
+		-bar TotalSubs
+	-Total Views in the last 30 Days
+		- bar TotalView30
+	-Total Subs in the Last 30 days
+		- bar TotalSubs30
+	-Total Views
+		-bar TotalViews
+
+
+Box Plot:
+	-Twitter Senitment Analysis
+		-box Twitter
+	-Comment Sentiment Analysis 
+		-box Comments 
+
+
