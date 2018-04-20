@@ -141,7 +141,7 @@ def init_db(db_name):
     conn.commit()
     conn.close()
 
-
+#creates keys for cahcing dictionary based off of parameters
 def params_unique_combination(baseurl, params):
     alphabetized_keys = sorted(params.keys())
     res = []
@@ -210,7 +210,9 @@ def get_comments(query):
     return text_obj
 
 
-#scrapes Scoial Blade for all the data
+#Scrapes Scoial Blade for all the data
+#Takes in a channel 
+#Returns Socialblade data and Specfic Channel Metirics in a 3 Set Tuple 
 def get_social(channel):
     baseurl='https://socialblade.com/youtube/search/{}'.format(channel)
     dig_url='https://socialblade.com'
@@ -260,6 +262,8 @@ def get_social(channel):
     return(summary_list,top_list,stat_list,future_list)
 
 #Filters Tweets and gives tweets senitment score
+#Takes in a list of tweets
+#Reutrns a List of tuples [(Tweet,Rating of tweet)]
 def filter_tweets(tweets):
     common_tweets=["https","http","RT"]
     letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -281,6 +285,8 @@ def filter_tweets(tweets):
     return tweet_object
 
 #Gets Tweets From Twitter
+#Takes in a search term 
+#Reutrns a  List of Tweets
 def get_tweets(search_term):
     protected_url ='https://api.twitter.com/1.1/search/tweets.json'
     params={'q':search_term,'count':30}
@@ -293,6 +299,7 @@ def get_tweets(search_term):
     return (tweet_objects)
 
 #Populates Database
+#Takes in a list of Channels
 def pop_table(channels):
     conn = sqlite3.connect(db_name)
     cur=conn.cursor()
@@ -363,6 +370,8 @@ def pop_table(channels):
     conn.close()
 
 #Gets Data from database for main.py
+#Takes in a specification of what type of data to return 
+#Reutrns data
 def get_data(spec):
     conn=sqlite3.connect(db_name)
     cur=conn.cursor()
@@ -439,6 +448,8 @@ def get_data(spec):
         return data,lowest_comment,highest_comment
 
 #Gets data from database for tables in the dash application 
+#Takes in Nothing
+#Returns Table Data
 def get_table_data():
     statement='''
     SELECT Y.Youtuber,Y.TotalGrade,Y.SubscriberRank,Y.VideoViewRank,Y.SocialBladeRank,Y.EstimatedYearEarn,YS.ChannelType 
@@ -461,6 +472,7 @@ while(ipt!='done'):
     Youtubers.append(ipt)
 print(Youtubers[:-1])
 print("Initializing Database...")
+
 #Uncomment the below functions for actual run of data.py and initializing of data
 #init_db(db_name)
 #pop_table(Youtubers[:-1])
