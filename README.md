@@ -1,27 +1,27 @@
-#Youtube Analyzer Project
-#####By Emil Meireles
+# Youtube Analyzer Project
+##### By Emil Meireles
 
 In this repository you will find the Files to the Youtube Analyzer Final Project for SI 206
 You will be running this program from main.py but need to have data.py imported to main and in the same directory 
 
-##What does this Program do?
+## What does this Program do?
 
 This Application compares youtubers based on different metrics such as subscribers,views, social blade rank etc...
 
-####Sources:
+#### Sources:
 	-Social Blade (Subscriber Information and other updated Youtuber information)
 	-Youtube API (Comments, Various IDs to pinpoint videos,channels, comments, etc.)
 	-Microsoft AZURE API (Sentiment Analysis)
 	-Twitter API (Tweets)
 
-##Important Points of the Function
+## Important Points of the Function
 	-data.py runs off of two functions: init_db() and pop_table()
 	-init_db()
 		-Creates SQL Database of all necesary information
 	-pop_table()
 		-Populates database for use by main.py
 
-##Running the Program 
+## Running the Program 
 To Run this program you will need to **install**:
 	-Dash from Plotly
 	-OAuth
@@ -38,7 +38,7 @@ If all goes well you will be prompted to enter in your Youtubers for comparison
 
 From there you can enter an option to run the application. (*please see bleow for options*)
 
-###Options:
+### Options:
 
 There are 2 types of Graphs: Bar and Box. They each have there own subset of data
 
