@@ -46,6 +46,7 @@ try:
 except:
     CACHE_DICTION = {}
 
+#Initializes Database
 def init_db(db_name):
     #code to create a new database goes here
     #handle exception if connection fails by printing the error
@@ -68,11 +69,11 @@ def init_db(db_name):
     cur.execute(statement)
     conn.commit()
 
-    #cur=conn.cursor()
-    #statement = '''
-    #DROP TABLE IF EXISTS 'Tweets';
-    #'''
-    #cur.execute(statement)
+    cur=conn.cursor()
+    statement = '''
+    DROP TABLE IF EXISTS 'Tweets';
+    '''
+    cur.execute(statement)
 
     cur=conn.cursor()
     statement = '''
@@ -113,18 +114,18 @@ def init_db(db_name):
     create_cur.execute(statement)
     conn.commit()
 
-    #statement= '''
-    #CREATE TABLE "Tweets"(
-    #'Id' INTEGER PRIMARY KEY AUTOINCREMENT,
-    #'Tweet' TEXT,
-    #'Reference' INTEGER NOT NULL,
-    #'YoutuberReferencedId' INTEGER NOT NULL,
-    #'SentiScore' REAL NOT NULL,
-    #FOREIGN KEY (YoutuberReferencedId) REFERENCES Youtubers(Id)
-    #);
-    # '''
-    #create_cur.execute(statement)
-    #conn.commit()
+    statement= '''
+    CREATE TABLE "Tweets"(
+    'Id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'Tweet' TEXT,
+    'Reference' INTEGER NOT NULL,
+    'YoutuberReferencedId' INTEGER NOT NULL,
+    'SentiScore' REAL NOT NULL,
+    FOREIGN KEY (YoutuberReferencedId) REFERENCES Youtubers(Id)
+    );
+     '''
+    create_cur.execute(statement)
+    conn.commit()
 
     statement= '''
     CREATE TABLE "Comments"(
@@ -148,6 +149,7 @@ def params_unique_combination(baseurl, params):
         res.append("{}-{}".format(k, params[k]))
     return baseurl + "_".join(res)
 
+#Caching Function
 def cache(baseurl, params='',auth=''):
     if params!='':
         unique_ident = params_unique_combination(baseurl,params)
@@ -174,6 +176,7 @@ def cache(baseurl, params='',auth=''):
         fw.close() # Close the open file
         return CACHE_DICTION[unique_ident]
 
+#Gets Youtube Comments
 def get_comments(query):
     base_Azure='https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/'+'sentiment'
     headers_Azure={
@@ -256,6 +259,7 @@ def get_social(channel):
         future_list.append(item.text.strip())
     return(summary_list,top_list,stat_list,future_list)
 
+#Filters Tweets and gives tweets senitment score
 def filter_tweets(tweets):
     common_tweets=["https","http","RT"]
     letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -275,6 +279,8 @@ def filter_tweets(tweets):
         tweet_object.append((text,rating))
 
     return tweet_object
+
+#Gets Tweets From Twitter
 def get_tweets(search_term):
     protected_url ='https://api.twitter.com/1.1/search/tweets.json'
     params={'q':search_term,'count':30}
@@ -286,6 +292,7 @@ def get_tweets(search_term):
     tweet_objects=[Text(Text=item[0],Sentiment=item[1],Reference=search_term) for item in f_text]
     return (tweet_objects)
 
+#Populates Database
 def pop_table(channels):
     conn = sqlite3.connect(db_name)
     cur=conn.cursor()
@@ -355,6 +362,7 @@ def pop_table(channels):
 
     conn.close()
 
+#Gets Data from database for main.py
 def get_data(spec):
     conn=sqlite3.connect(db_name)
     cur=conn.cursor()
@@ -430,6 +438,7 @@ def get_data(spec):
         highest_comment=cur.fetchall()[-1]
         return data,lowest_comment,highest_comment
 
+#Gets data from database for tables in the dash application 
 def get_table_data():
     statement='''
     SELECT Y.Youtuber,Y.TotalGrade,Y.SubscriberRank,Y.VideoViewRank,Y.SocialBladeRank,Y.EstimatedYearEarn,YS.ChannelType 
@@ -445,3 +454,13 @@ def get_table_data():
     return table_data
 
 
+Youtubers=[]
+ipt='a'
+while(ipt!='done'):
+    ipt=input('Please Enter Youtuber: ')
+    Youtubers.append(ipt)
+print(Youtubers[:-1])
+print("Initializing Database...")
+#Uncomment the below functions for actual run of data.py and initializing of data
+#init_db(db_name)
+#pop_table(Youtubers[:-1])

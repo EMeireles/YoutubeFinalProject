@@ -10,6 +10,7 @@ conn = sqlite3.connect(db_name)
 cur=conn.cursor()
 headers=['Youtuber','TotalGrade','SubscriberRank','VideoViewRank','Social Blade Rank','Estimated Year Earnings','Channel Type']
 
+#Logic for picking the right app to Run
 def sort(logic):
     if logic[0].lower()=='bar':
         if logic[1].lower()=='totalsubs':
@@ -62,7 +63,7 @@ def sort(logic):
             traces = []
             for item in dat:
                 trace= go.Bar(
-                    x=['Subscriber Total'],
+                    x=['Views Total'],
                     y=[item[1]],
                     name=item[0]
                 )
@@ -89,7 +90,7 @@ def sort(logic):
                 html.H1(children='Youtube Analyzer'),
 
                 html.Div(children='''
-                    Subscribers: Bar graph comparison of Youtuber Total Subscribers
+                    Total Video Views: Bar graph comparison of Youtuber Total Channel Views
                 '''),
 
                 dcc.Graph(
@@ -251,13 +252,17 @@ def sort(logic):
     else:
         return False
 
+#Dash Application calls
 app_bar = dash.Dash()
 app_box = dash.Dash()
 
+#Loads help text
 def load_help_text():
     with open('help.txt') as f:
         return f.read()
-if __name__ == '__main__':
+
+#main
+def main():
     help_text = load_help_text()
     print('Welcome to the Youtube Analyzer Application!\n')
     ipt=input('Please enter a command or type "help" for more information: ')
@@ -282,5 +287,11 @@ if __name__ == '__main__':
             ipt=input('Please enter a command or type "help" for more information: ')
         else:
             ipt=input('Sorry,Command Not recognized, Please try agian:')
+
+
+if __name__ == '__main__':
+    main()
+    print("Bye!")
+    
         
 
