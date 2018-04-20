@@ -474,5 +474,6 @@ print(Youtubers[:-1])
 print("Initializing Database...")
 
 #Uncomment the below functions for actual run of data.py and initializing of data
+#BE WEARY OF API USAGE AND LIMITS AS INIT_DB WILL CALL THE AZURE API AT LEAST 100 TIMES OR MORE.
 #init_db(db_name)
 #pop_table(Youtubers[:-1])
