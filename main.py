@@ -189,7 +189,7 @@ def sort(logic):
                 ])
             return app_bar.layout
 
-    if logic[0].lower()=='box':
+    elif logic[0].lower()=='box':
         if logic[1].lower()=='twitter':
             d_twitter=d.get_data('twitter')
             traces = []
