@@ -11,7 +11,6 @@ cur=conn.cursor()
 headers=['Youtuber','TotalGrade','SubscriberRank','VideoViewRank','Social Blade Rank','Estimated Year Earnings','Channel Type']
 
 def sort(logic):
-
     if logic[0].lower()=='bar':
         if logic[1].lower()=='totalsubs':
             dat=d.get_data('subs')
@@ -60,7 +59,6 @@ def sort(logic):
             return app_bar.layout
         if logic[1].lower()=='totalviews':
             dat=d.get_data('views')
-            print(dat)
             traces = []
             for item in dat:
                 trace= go.Bar(
@@ -103,11 +101,10 @@ def sort(logic):
             return app_bar.layout
         if logic[1].lower()=='totalview30':
             dat=d.get_data('ViewsLastThirty')
-            print(dat)
             traces = []
             for item in dat:
                 trace= go.Bar(
-                    x=['Subscriber Total'],
+                    x=['Views in the Last 30 days'],
                     y=[item[1]],
                     name=item[0]
                 )
@@ -134,7 +131,7 @@ def sort(logic):
                 html.H1(children='Youtube Analyzer'),
 
                 html.Div(children='''
-                    Subscribers: Bar graph comparison of Youtuber Total Subscribers
+                    Views in the Last 30 Days: Bar graph comparison of Video Views in the Last 30 days
                 '''),
 
                 dcc.Graph(
@@ -148,11 +145,10 @@ def sort(logic):
             return app_bar.layout
         if logic[1].lower()=='totalsubs30':
             dat=d.get_data('SubsLastThirty')
-            print(dat)
             traces = []
             for item in dat:
                 trace= go.Bar(
-                    x=['Subscriber Total'],
+                    x=['Subscribers Gained in the Last 30 days'],
                     y=[item[1]],
                     name=item[0]
                 )
@@ -179,7 +175,7 @@ def sort(logic):
                 html.H1(children='Youtube Analyzer'),
 
                 html.Div(children='''
-                    Subscribers: Bar graph comparison of Youtuber Total Subscribers
+                    Subscribers: Bar graph comparison of Youtuber Total Subscribers Gained in the Last 30 days
                 '''),
 
                 dcc.Graph(
@@ -255,13 +251,27 @@ def sort(logic):
 app_bar = dash.Dash()
 app_box = dash.Dash()
 
+def load_help_text():
+    with open('help.txt') as f:
+        return f.read()
 if __name__ == '__main__':
+    help_text = load_help_text()
     print('Welcome to the Youtube Analyzer Application!\n')
     ipt=input('Please enter a command or type "help" for more information: ')
-    logic=ipt.split()
-    if logic[0]=='bar':
-        lay=sort(logic)
-        app_bar.run_server()
-    if logic[0]=='box':
-        lay=sort(logic)
-        app_box.run_server()
+    while(ipt!='quit'):
+        logic=ipt.split()
+        if logic[0]=='bar':
+            lay=sort(logic)
+            app_bar.run_server()
+            ipt=input('Please enter a command or type "help" for more information: ')
+        elif logic[0]=='box':
+            lay=sort(logic)
+            app_box.run_server()
+            ipt=input('Please enter a command or type "help" for more information: ')
+        elif logic[0] == 'help':
+            print(help_text)
+            ipt=input('Please enter a command or type "help" for more information: ')
+        else:
+            ipt=input('Sorry,Command Not recognized, Please try agian:')
+        
+

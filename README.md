@@ -60,6 +60,5 @@ Below are the subsets of data and below each option is how to call it.
 	-Comment Sentiment Analysis 
 		-box Comments 
 
-*Each option launches a NEW Dash Application, therefore to get a new comparison kill the current application and run main.py with a new option*
 
 

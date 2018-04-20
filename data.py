@@ -366,7 +366,7 @@ def get_data(spec):
         options=cur.fetchall()
         return options
     elif spec=='views':
-        statement=='''
+        statement='''
         SELECT Y.Youtuber,YS.VideoViews FROM Youtubers AS Y JOIN YoutubeStats AS YS ON Y.Id=YS.YoutuberId
         '''
         cur.execute(statement)
