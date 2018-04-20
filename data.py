@@ -187,10 +187,12 @@ def get_comments(query):
     base_url='https://www.googleapis.com/youtube/v3/search'
     params={'part':'snippet','q':query,'type':'video','key':YoutubeAPI,'maxResults':'10'}
     tube_data=cache(base_url,params)
+    #Gets Video IDs
     v_ids=[]
     for dic in tube_data['items']:
         v_ids.append(dic['id']['videoId'])
 
+    #Gets Comments Off Videos
     text_list=[]
     base_comments='https://www.googleapis.com/youtube/v3/commentThreads'
     for vIDs in v_ids:
@@ -199,7 +201,7 @@ def get_comments(query):
         for dic in comment_data['items']:
             text_list.append(dic['snippet']['topLevelComment']['snippet']['textDisplay'])
     
-
+    #Gets Sentiment For comments
     text_obj=[]
     for comment in text_list:
         documents= {'documents' : [ {'id': '1', 'language': 'en', 'text':comment}]}
@@ -268,12 +270,13 @@ def filter_tweets(tweets):
     common_tweets=["https","http","RT"]
     letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+    #Filters Tweets
     filtered_tweets=[]
     for strng in tweets:
         word_tokens=word_tokenize(strng)
         if word_tokens[0] not in common_tweets:
             filtered_tweets.append(strng)
-
+    #Gets Sentiment For Tweets
     tweet_object=[]
     for text in filtered_tweets:
         documents= {'documents' : [ {'id': '1', 'language': 'en', 'text':text}]}
@@ -350,8 +353,6 @@ def pop_table(channels):
         print("Cooling Down...")
         time.sleep(50)
     
-
-    print("Filling Db...")
     for lis in comment_list:
         for comments in lis:
             id_cur=conn.cursor()

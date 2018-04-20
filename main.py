@@ -58,7 +58,7 @@ def sort(logic):
                     figure=table_fig)
             ])
             return app_bar.layout
-        if logic[1].lower()=='totalviews':
+        elif logic[1].lower()=='totalviews':
             dat=d.get_data('views')
             traces = []
             for item in dat:
@@ -100,7 +100,7 @@ def sort(logic):
                     id='Table',
                     figure=table_fig)])
             return app_bar.layout
-        if logic[1].lower()=='totalview30':
+        elif logic[1].lower()=='totalview30':
             dat=d.get_data('ViewsLastThirty')
             traces = []
             for item in dat:
@@ -144,7 +144,7 @@ def sort(logic):
                  
                 ])
             return app_bar.layout
-        if logic[1].lower()=='totalsubs30':
+        elif logic[1].lower()=='totalsubs30':
             dat=d.get_data('SubsLastThirty')
             traces = []
             for item in dat:
@@ -188,6 +188,8 @@ def sort(logic):
                 
                 ])
             return app_bar.layout
+        else:
+            return False
 
     elif logic[0].lower()=='box':
         if logic[1].lower()=='twitter':
@@ -221,7 +223,7 @@ def sort(logic):
                 ])
             return app_box.layout
 
-        if logic[1].lower()=='comments':
+        elif logic[1].lower()=='comments':
             d_comments=d.get_data('comments')
             traces = []
             for items in d_comments[0]:
@@ -249,8 +251,8 @@ def sort(logic):
                 ])
             return app_box.layout
 
-    else:
-        return False
+        else:
+            return False
 
 #Dash Application calls
 app_bar = dash.Dash()
@@ -274,17 +276,17 @@ def main():
                 ipt=input('Sorry,Command Not recognized, Please try agian:')
             else:
                 app_bar.run_server()
-                ipt=input('Please enter a command or type "help" for more information: ')
+                ipt=input('\nPlease enter a command or type "help" for more information: ')
         elif logic[0]=='box':
             lay=sort(logic)
             if lay==False:
                 ipt=input('Sorry,Command Not recognized, Please try agian:')
             else:
                 app_box.run_server()
-                ipt=input('Please enter a command or type "help" for more information: ')
+                ipt=input('\nPlease enter a command or type "help" for more information: ')
         elif logic[0] == 'help':
             print(help_text)
-            ipt=input('Please enter a command or type "help" for more information: ')
+            ipt=input('\nPlease enter a command or type "help" for more information: ')
         else:
             ipt=input('Sorry,Command Not recognized, Please try agian:')
 
